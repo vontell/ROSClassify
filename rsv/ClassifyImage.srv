@@ -1,0 +1,21 @@
+########################################
+# CONSTANTS
+########################################
+uint8 LEGO      = 0
+uint8 CORAL     = 1
+uint8 SEAWEED   = 2
+uint8 SAND      = 3
+
+########################################
+# Messages
+########################################
+sensor_msgs/Image image     # Image to classify
+---
+uint8 most_probable         # 0, 1, 2, 3 from CONSTANTS
+float64 uncertainty         # Some measure of uncertainty
+float64 lego_prob           # 0-1 probablity of lego in image
+float64 coral_prob          # 0-1 probablity of coral in image
+float64 seaweed_prob        # 0-1 probablity of seaweed in image
+float64 sand_prob           # 0-1 probablity of sand in image
+
+# How do we discern whole images vs region of an image?
