@@ -1,0 +1,7 @@
+raw/
+training/
+raw.zip
+training.zip
+*.h5
+.vscode
+.DS_Store
