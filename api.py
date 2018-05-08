@@ -2,7 +2,7 @@ from keras.models import load_model
 from PIL import Image
 import numpy as np
 
-model = load_model('grand_challenge_trained_all.h5')
+model = load_model('grand_challenge_trained_all_15.h5')
 size = 41*10
 
 def classify_image(path_to_image):
@@ -39,4 +39,4 @@ def classify_image(path_to_image):
             
     img.show()
 
-classify_image("raw/image84.png")
+classify_image("raw/image39.png")

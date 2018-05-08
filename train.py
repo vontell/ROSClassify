@@ -7,13 +7,14 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv3D, MaxPooling3D, Conv2D, MaxPooling2D
 from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
+from keras.callbacks import EarlyStopping
 from sklearn.utils import shuffle
 import h5py
 
 classes = ["coral", "lego", "floor"]
 num_classes = len(classes)
 batch_size = 16
-epochs = 15
+epochs = 20
 image_size = (200, 200, 4) #width, height, channels (r,g,b,hue,entropy?)
 
 # READ IN DATA
@@ -97,9 +98,11 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 
 # Use ImageDataGenerator to modify images to get more training data. Then fit the model
 #   If needed, define preprocessing_function() from https://keras.io/preprocessing/image/
+
+es = EarlyStopping(patience=3, min_delta=0.001)
 datagen = ImageDataGenerator(rotation_range = 30, featurewise_center=True)
 flowed = datagen.flow(np.array(x_train), np.array(y_train), batch_size=batch_size)
-model.fit_generator(flowed, steps_per_epoch=len(x_train) / batch_size, epochs=epochs)
+model.fit_generator(flowed, steps_per_epoch=len(x_train) / batch_size, epochs=epochs, validation_data=(np.asarray(x_test), np.asarray(y_test)), callbacks=[es])
 
 # Save the model and evaluate
 model.save('grand_challenge_trained_all_15.h5')
