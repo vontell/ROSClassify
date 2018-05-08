@@ -8,6 +8,7 @@ from keras.layers import Conv3D, MaxPooling3D, Conv2D, MaxPooling2D
 from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
 from sklearn.utils import shuffle
+import h5py
 
 classes = ["coral", "lego", "floor"]
 num_classes = len(classes)

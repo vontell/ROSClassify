@@ -4,12 +4,22 @@ from PIL import Image
 root = "raw/"
 saveDir = "training/"
 
-size = 41.0*10
+size = 41*10
 
 directories = {'l': 'lego', 'c': 'coral', 's': 'sand', 'f': 'floor', 'u': 'unknown'}
 
 count = 786
+
+if os.path.isfile('count.pkl'):
+    with open('count.pkl', 'rb') as f:
+        count = pickle.load(f)
+
 currentFile = 19
+
+if os.path.isfile('currentFile.pkl'):
+    with open('currentFile', 'rb') as f:
+        currentFile = pickle.load(f)
+
 for subdir, dirs, files in os.walk(root):
     for file in [files[currentFile]]:#files[0:2]:
         print(file)
@@ -28,3 +38,8 @@ for subdir, dirs, files in os.walk(root):
                     cropped.save(path, 'png')
                     print(path)
                     count += 1
+                    with open('count.pkl', 'wb') as f:
+                        pickle.dump(count, f)
+        currentFile += 1
+        with open('currentFile.pkl', 'wb') as f:
+            pickle.dump(currentFile, f)

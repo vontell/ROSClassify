@@ -35,4 +35,4 @@ def classify_image(path_to_image):
             
     img.show()
 
-classify_image("raw/image4.png")
+classify_image("raw/image68.png")
