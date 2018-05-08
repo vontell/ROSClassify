@@ -1,5 +1,6 @@
 import os
 from PIL import Image
+import pickle
 
 root = "raw/"
 saveDir = "training/"
@@ -17,7 +18,7 @@ if os.path.isfile('count.pkl'):
 currentFile = 19
 
 if os.path.isfile('currentFile.pkl'):
-    with open('currentFile', 'rb') as f:
+    with open('currentFile.pkl', 'rb') as f:
         currentFile = pickle.load(f)
 
 for subdir, dirs, files in os.walk(root):
