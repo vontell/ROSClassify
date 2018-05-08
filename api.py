@@ -32,6 +32,7 @@ def classify_image(path_to_image):
             overlay = Image.new('RGBA', (size,size), overlay_color)
             img.paste(overlay, box=(x*size, y*size))
             print(result)
+            
     img.show()
 
 classify_image("raw/image4.png")
