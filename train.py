@@ -23,7 +23,7 @@ for sub, dirs, files in os.walk(root):
     for dir in dirs:
         key = dir
         for subdir, dirs, files in os.walk(root + dir):
-            for file in files[0:min(91, len(files))]:
+            for file in files[0:min(190, len(files))]:
                 if file.endswith(".png"):
                     img = Image.open(subdir + "/" + file)
                     Rvals = np.array(img.getdata(band=0)).reshape((200,200))
