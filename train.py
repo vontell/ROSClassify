@@ -13,7 +13,7 @@ import h5py
 classes = ["coral", "lego", "floor"]
 num_classes = len(classes)
 batch_size = 16
-epochs = 5
+epochs = 15
 image_size = (200, 200, 4) #width, height, channels (r,g,b,hue,entropy?)
 
 # READ IN DATA
@@ -23,7 +23,7 @@ for sub, dirs, files in os.walk(root):
     for dir in dirs:
         key = dir
         for subdir, dirs, files in os.walk(root + dir):
-            for file in files[0:min(190, len(files))]:
+            for file in files[0:min(10000, len(files))]:
                 if file.endswith(".png"):
                     img = Image.open(subdir + "/" + file)
                     Rvals = np.array(img.getdata(band=0)).reshape((200,200))
@@ -74,7 +74,7 @@ print("Shuffled training data")
 # Build the model, starting with 2 convolutions, max pool, and a dropout
 # Our input is an image broken up into 3 (5) channels - R, G, B, (entropy, hue)
 model = Sequential()
-model.add(Conv2D(32, (10, 10), activation='relu', input_shape=(image_size[0], image_size[1], image_size[2])))
+model.add(Conv2D(32, (10, 10), activation='relu', strides=(2,2), input_shape=(image_size[0], image_size[1], image_size[2])))
 #model.add(Conv2D(32, (10, 10), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
@@ -102,7 +102,7 @@ flowed = datagen.flow(np.array(x_train), np.array(y_train), batch_size=batch_siz
 model.fit_generator(flowed, steps_per_epoch=len(x_train) / batch_size, epochs=epochs)
 
 # Save the model and evaluate
-model.save('grand_challenge_trained_4.h5')
+model.save('grand_challenge_trained_all_15.h5')
 result = model.evaluate(np.asarray(x_test), np.asarray(y_test))
 print('\nTesting loss: {}, acc: {}\n'.format(result[0], result[1]))
 
