@@ -2,12 +2,13 @@ from keras.models import load_model
 from PIL import Image
 import numpy as np
 
-model = load_model('grand_challenge_trained_4.h5')
+model = load_model('grand_challenge_trained_all_15.h5')
 size = 41*10
 
 def classify_image(path_to_image):
 
     img = Image.open(path_to_image).convert("RGBA")
+    img.show()
     xMod = range(int(img.width / size))
     yMod = range(int(img.height / size))
     for x in xMod:
@@ -28,6 +29,9 @@ def classify_image(path_to_image):
             expanded = np.expand_dims(RGBHimage, axis=0)
             result = model.predict_classes(expanded)[0]
 
+            # RED IS CORAL
+            # GREEN IS LEGO
+            # BLUE IS FLOOR 
             overlay_color = (255, 0, 0, 50) if result == 0 else ((0, 255, 0, 50) if result == 1 else (0, 0, 255, 50))
             overlay = Image.new('RGBA', (size,size), overlay_color)
             img.paste(overlay, box=(x*size, y*size))
@@ -35,4 +39,4 @@ def classify_image(path_to_image):
             
     img.show()
 
-classify_image("raw/image68.png")
+classify_image("raw/image39.png")
