@@ -3,33 +3,34 @@ from PIL import Image
 #import psutil
 import pickle
 
-root = "raw/"
-saveDir = "training/"
+root = "ros_images/"
+saveDir = "save_ros/"
 
-size = 41*10
+# size = 41*10
+size = 80
 
 directories = {'l': 'lego', 'c': 'coral', 's': 'sand', 'f': 'floor', 'u': 'unknown'}
 
-count = 786
+count = 0
 
-if os.path.isfile('count.pkl'):
-    with open('count.pkl', 'rb') as f:
+if os.path.isfile('count_ros.pkl'):
+    with open('count_ros.pkl', 'rb') as f:
         count = pickle.load(f)
 
-currentFile = 19
+currentFile_ros = 0
 
-if os.path.isfile('currentFile.pkl'):
-    with open('currentFile.pkl', 'rb') as f:
-        currentFile = pickle.load(f)
+if os.path.isfile('currentFile_ros.pkl'):
+    with open('currentFile_ros.pkl', 'rb') as f:
+        currentFile_ros = pickle.load(f)
 
-print(currentFile)
+print(currentFile_ros)
 
 for subdir, dirs, files in os.walk(root):
-    for file in [files[currentFile]]:#files[0:2]:
+    for file in [files[currentFile_ros]]:#files[0:2]:
         print(file)
-        if file.endswith("png"):
+        if file.endswith("jpg"):
             img = Image.open(root + file)
-            # img.show()
+            img.show()
             xMod = range(int(img.width / size))
             yMod = range(int(img.height / size))
             print(len(xMod)*len(yMod))
@@ -43,7 +44,7 @@ for subdir, dirs, files in os.walk(root):
                     cropped.save(path, 'png')
                     print(path)
                     count += 1
-                    with open('count.pkl', 'wb') as f:
+                    with open('count_ros.pkl', 'wb') as f:
                         pickle.dump(count, f)
                     
                     # for proc in psutil.process_iter():
@@ -51,6 +52,6 @@ for subdir, dirs, files in os.walk(root):
                     #         # proc.terminate()
                     #         proc.kill()
 
-        currentFile += 1
-        with open('currentFile.pkl', 'wb') as f:
-            pickle.dump(currentFile, f)
+        currentFile_ros += 1
+        with open('currentFile_ros.pkl', 'wb') as f:
+            pickle.dump(currentFile_ros, f)

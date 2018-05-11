@@ -44,7 +44,7 @@ for sub, dirs, files in os.walk(root):
 
 total = sum([len(data[arr]) for arr in classes])
 for key in classes:
-    percent = len(data[key])/total
+    percent = len(data[key])*1.0/total
     print("Loaded has " + str(percent) + " ratio of " + str(key))
 
 x_train, y_train, x_test, y_test = [], [], [], []
