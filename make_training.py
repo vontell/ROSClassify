@@ -1,6 +1,6 @@
 import os
 from PIL import Image
-import psutil
+#import psutil
 import pickle
 
 root = "raw/"
@@ -46,10 +46,10 @@ for subdir, dirs, files in os.walk(root):
                     with open('count.pkl', 'wb') as f:
                         pickle.dump(count, f)
                     
-                    for proc in psutil.process_iter():
-                        if proc.name() == "display":
-                            # proc.terminate()
-                            proc.kill()
+                    # for proc in psutil.process_iter():
+                    #     if proc.name() == "display":
+                    #         # proc.terminate()
+                    #         proc.kill()
 
         currentFile += 1
         with open('currentFile.pkl', 'wb') as f:
